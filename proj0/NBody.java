@@ -46,6 +46,7 @@ public class NBody
 		String background = "images/starfield.jpg";
 		StdDraw.setScale(-radius, radius);
 		StdDraw.clear();
+		//StdDraw.picture(0, 0, background);
 		// StdDraw.picture(0, 0, background);
 		// for (int i = 0; i < planets.length; i++)
 		// {

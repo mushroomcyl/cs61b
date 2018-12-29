@@ -1,6 +1,7 @@
 /**
  * Created by jug on 1/22/18.
  */
+/** the reason is that the value of the foods.csv is negative. */
 public class DebugExercise3 {
     public static int countTurnips(In in) {
         int totalTurnips = 0;
@@ -13,6 +14,7 @@ public class DebugExercise3 {
                 int newTotal = totalTurnips + numAvailable;
                 totalTurnips = newTotal;
             }
+
             in.readLine();
         }
         return totalTurnips;
