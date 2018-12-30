@@ -21,7 +21,6 @@ public class ArithmeticTest {
 
     @Test 
     public void testSum() {
-
         assertEquals(11, Arithmetic.sum(5, 6));
         assertEquals(-1, Arithmetic.sum(5, -6));
         assertEquals(-6, Arithmetic.sum(0, -6));
@@ -29,7 +28,7 @@ public class ArithmeticTest {
     }
 
     /* Run the unit tests in this file. */
-    public static void main(String... args) {        
+    public static void main(String... args) {
         jh61b.junit.TestRunner.runTests("all", ArithmeticTest.class);
     }
 }
