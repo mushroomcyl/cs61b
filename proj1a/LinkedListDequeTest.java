@@ -2,7 +2,7 @@
 public class LinkedListDequeTest {
 	
 	/* Utility method for printing out empty checks. */
-	public static boolean checkEmpty(boolean expected, boolean actual) {
+	public static boolean checkEmpty(Boolean expected, Object actual) {
 		if (expected != actual) {
 			System.out.println("isEmpty() returned " + actual + ", but expected: " + expected);
 			return false;
@@ -36,7 +36,7 @@ public class LinkedListDequeTest {
 	public static void addIsEmptySizeTest() {
 		System.out.println("Running add/isEmpty/Size test.");
 		System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-		/*
+
 		LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
@@ -48,6 +48,13 @@ public class LinkedListDequeTest {
 		passed = checkSize(1, lld1.size()) && passed;
 		passed = checkEmpty(false, lld1.isEmpty()) && passed;
 
+//		lld1.addFirst("front_after");
+//
+//		// The && operator is the same as "and" in Python.
+//		// It's a binary operator that returns true if both arguments true, and false otherwise.
+//		passed = checkSize(2, lld1.size()) && passed;
+//		passed = checkEmpty(false, lld1.isEmpty()) && passed;
+
 		lld1.addLast("middle");
 		passed = checkSize(2, lld1.size()) && passed;
 
@@ -58,7 +65,6 @@ public class LinkedListDequeTest {
 		lld1.printDeque();
 
 		printTestStatus(passed);
-		*/
 	}
 
 	/** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
@@ -67,7 +73,7 @@ public class LinkedListDequeTest {
 		System.out.println("Running add/remove test.");
 
 		System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-		/*
+
 		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
 		// should be empty 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
@@ -81,12 +87,35 @@ public class LinkedListDequeTest {
 		passed = checkEmpty(true, lld1.isEmpty()) && passed;
 
 		printTestStatus(passed);
-		*/
+
 	}
 
+	/** test get */
+	public static void getTest() {
+
+		System.out.println("Running add/remove test.");
+
+		System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
+
+		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+		printTestStatus(null == lld1.getRecursive(0));
+		// should be empty
+		boolean passed = checkEmpty(true, lld1.isEmpty());
+
+		lld1.addFirst(10);
+		lld1.addFirst(20);
+		lld1.addLast(30);
+		printTestStatus(10 == lld1.getRecursive(1));
+		printTestStatus(null == lld1.getRecursive(4));
+	}
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
-		addIsEmptySizeTest();
-		addRemoveTest();
+		//addIsEmptySizeTest();
+		//addRemoveTest();
+//		printTestStatus(checkEmpty(null, null));
+//		printTestStatus(checkSize(0,0));
+		//addIsEmptySizeTest();
+		//addRemoveTest();
+		getTest();
 	}
 } 
