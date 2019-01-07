@@ -1,10 +1,10 @@
 public class LinkedListDeque<T> {
-    public class ListNode {
-        public T item;
-        public ListNode prev;
-        public ListNode next;
+    private class ListNode {
+        private T item;
+        private ListNode prev;
+        private ListNode next;
 
-        public ListNode(T i, ListNode p, ListNode n) {
+        private ListNode(T i, ListNode p, ListNode n) {
             item = i;
             prev = p;
             next = n;
@@ -12,11 +12,10 @@ public class LinkedListDeque<T> {
     }
 
     /** The first item (if it exists) is at sentinel.next. */
-    public ListNode sentinel;
-    public int size;
+    private ListNode sentinel;
+    private int size;
 
     /** Creates an empty LinkedList. */
-    //what if there is nothing in the bracket?
     public LinkedListDeque() {
         sentinel = new ListNode(null, null, null);
         sentinel.prev = sentinel;

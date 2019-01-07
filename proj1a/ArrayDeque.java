@@ -1,105 +1,82 @@
 public class ArrayDeque<T> {
-    public T[] items;
-    public int size;
-    public int nextFirst;
-    public int nextLast;
-    public float usage;
+    private T[] items;
+    private int size;
+    private int nextFirst;
+    private int nextLast;
+    private int reversedLength;
+
+    private static int RESIZE_FACTOR = 2;
+    private static double USAGE_FACTOR = 0.25;
 
     /** Creates an empty list. */
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
-        usage = 0;
-        // set the two pointers randomly.
-        nextFirst = 2;
-        nextLast = nextFirst + 1;
+        reversedLength = 8; // array length
+        nextFirst = 0;
+        nextLast = 1;
     }
 
-    /** Resize the array. */
-    public void resize() {
-        boolean reduce_size = (usage < 0.25 && items.length > 16);
-        int target_size;
-        int start = 0, end = 0;
-        if (size == items.length) {
-            target_size = items.length * 2;
-            T[] new_items = (T[]) new Object[target_size];
-            start = 0;
-            end = items.length;
-            System.arraycopy(items, start, new_items, 1, end - start);
-            nextFirst = 0;
-            nextLast = end - start + 1;
-        }
-        if (reduce_size) {
-            target_size = items.length / 2;
-            T[] new_items = (T[]) new Object[target_size];
-            for (int i = 0; i < items.length - 1; i ++) {
-                if (items[i] == null && items[i+1] != null) {
-                    start = i + 1;
-                }
-                if (items[i] != null && items[i+1] == null) {
-                    end = i;
-                }
-            }
-            System.arraycopy(items, start, new_items, 1, end - start + 1);
-            items = new_items;
-            nextFirst = 0;
-            nextLast = end - start + 2;
-        }
+    /** Define some helper functions. */
+    private boolean isFull() {
+        return size == reversedLength;
     }
 
-    /** Move the first pointer, add/remove. */
-    public int movePointerFirst(boolean add) {
-        if (add) {
-            if (nextFirst != 0) {
-                nextFirst -= 1;
-            } else {
-                nextFirst = items.length - 1;
-            }
-        } else {
-            if (nextFirst != items.length - 1) {
-                nextFirst += 1;
-            } else {
-                nextFirst = 0;
-            }
+    private int plusOne(int index) {
+        int nextIndex = index + 1;
+        if (nextIndex >= reversedLength) {
+            nextIndex %= reversedLength;
         }
-        return nextFirst;
+        return nextIndex;
     }
 
-    /** Move the last pointer, add/remove. */
-    public int movePointerLast(boolean add) {
-        if (add) {
-            if (nextLast != items.length - 1) {
-                nextLast += 1;
-            } else {
-                nextLast = 0;
-            }
-        } else {
-            if (nextLast != 0) {
-                nextLast -= 1;
-            } else {
-                nextLast = items.length - 1;
-            }
+    private int minusOne(int index) {
+        int prevIndex = index - 1;
+        if (prevIndex < 0) {
+            prevIndex += reversedLength;
         }
-        return nextLast;
+        return prevIndex;
+    }
+
+    /** increase or decrease the size of array. */
+    private void resize(int newLength, String flag) {
+        T[] itemsNew = (T[]) new Object[newLength];
+        if (flag.equals("increase")) {
+            // The array is divided into two parts.
+            int start = plusOne(nextFirst); //start position of the first part.
+            int firstLength = size - start;
+            System.arraycopy(items, start, itemsNew, 1, firstLength);
+            int secondLength = nextLast;
+            System.arraycopy(items, 0, itemsNew, firstLength + 1, secondLength);
+        } else if (flag.equals("decrease")) {
+            System.arraycopy(items, 0, itemsNew, 1, size);
+        }
+        items = itemsNew;
+        reversedLength = newLength;
+        nextFirst = 0;
+        nextLast = size + 1;
     }
 
     /** Adds x to the front of the list. */
     public void addFirst(T x) {
-        resize();
+        if (isFull()) {
+            int newLength = reversedLength * RESIZE_FACTOR;
+            resize(newLength, "increase");
+        }
         items[nextFirst] = x;
         size += 1;
-        usage = (float) size / (float) items.length;
-        nextFirst = movePointerFirst(true);
+        nextFirst = minusOne(nextFirst);
     }
-
 
     /** Adds x to the end of the list. */
     public void addLast(T x) {
-        resize();
+        if (isFull()) {
+            int newLength = reversedLength * RESIZE_FACTOR;
+            resize(newLength, "increase");
+        }
         items[nextLast] = x;
         size += 1;
-        usage = (float) size / (float) items.length;
-        nextLast = movePointerLast(true);
+        nextLast = plusOne(nextLast);
     }
 
     /** Returns true if deque is empty, false otherwise. */
@@ -112,11 +89,34 @@ public class ArrayDeque<T> {
         return size;
     }
 
-    /** Prints the items in the deque from first to last, separated by a space. */
-    public void printDeque() {
-        for (T item : items) {
-            System.out.print(item + " ");
+    /** Some helper functions for remove and get. */
+    private void maintainUsageFactor() {
+        if (reversedLength >= 16) {
+            double usage = (double) size / reversedLength;
+            if (usage < USAGE_FACTOR) {
+                int newLength = reversedLength / RESIZE_FACTOR;
+                resize(newLength, "decrease");
+            }
         }
+    }
+
+    private int getTrueIndex(int index) {
+        int trueIndex = (nextFirst + 1 + index) % reversedLength;
+        return trueIndex;
+    }
+
+    /** Gets the item at the given index. */
+    public T get(int index) {
+        if (index < size) {
+            int trueIndex = getTrueIndex(index);
+            return items[trueIndex];
+        }
+        return null;
+    }
+
+    private void setNull(int index) {
+        int trueIndex = getTrueIndex(index);
+        items[trueIndex] = null;
     }
 
     /** Removes and returns the item at the front of the deque. */
@@ -124,43 +124,31 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        int i = movePointerFirst(false);
-        T remove = items[i];
-        items[i] = null;
+        T first = get(0);
+        setNull(0);
+        nextFirst = plusOne(nextFirst);
         size -= 1;
-        usage = (float) size / (float) items.length;
-        nextFirst = i;
-        resize();
-        return remove;
+        maintainUsageFactor();
+        return first;
     }
 
-    /** Removes and returns the item at the back of the deque. */
+    /** Removes and returns the item at the end of the deque. */
     public T removeLast() {
         if (size == 0) {
             return null;
         }
-        int i = movePointerLast(false);
-        T remove = items[i];
-        items[i] = null;
+        T last = get(size - 1);
+        setNull(size - 1);
+        nextLast = minusOne(nextLast);
         size -= 1;
-        usage = (float) size / (float) items.length;
-        nextLast = i;
-        resize();
-        return remove;
+        maintainUsageFactor();
+        return last;
     }
 
-    /** Gets the item at the given index. */
-    public T get(int index) {
-        if (index > items.length - 1) {
-            return null;
-        } else if (nextFirst + 1 + index < items.length) {
-            return items[nextFirst + 1 + index];
-        } else {
-            return items[nextFirst + 1 + index - items.length];
+    /** Prints the items in the deque from first to last, separated by a space. */
+    public void printDeque() {
+        for (int i = 0; i < size; i++) {
+            System.out.print(get(i) + " ");
         }
     }
-
 }
-
-
-

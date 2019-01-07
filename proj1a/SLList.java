@@ -2,18 +2,18 @@
  * of the nakedness within. */
 public class SLList {
     public class IntNode {
-        public int item;
-        public IntNode next;
+        private int item;
+        private IntNode next;
 
-        public IntNode(int i, IntNode n) {
+        private IntNode(int i, IntNode n) {
             item = i;
             next = n;
         }
     }
 
     /* The first item (if it exists) is at sentinel.next. */
-    public IntNode sentinel;
-    public int size;
+    private IntNode sentinel;
+    private int size;
 
 //    public void lectureQuestion() {
 //        SLList L = new SLList();

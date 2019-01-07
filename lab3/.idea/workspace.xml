@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="48b9c174-c625-459b-9716-4791b08d1298" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../proj1a/AList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../proj1a/ArrayDeque.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../proj1a/LinkedListDeque.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../proj1a/SLList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../proj1a/LinkedListDequeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj1a/LinkedListDequeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj1a/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../proj1a/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj1a/LinkedListDeque.java" beforeDir="false" afterPath="$PROJECT_DIR$/../proj1a/LinkedListDeque.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj1a/out/production/proj1a/ArrayDeque.class" beforeDir="false" afterPath="$PROJECT_DIR$/../proj1a/out/production/proj1a/ArrayDeque.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj1a/out/production/proj1a/LinkedListDeque$ListNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/../proj1a/out/production/proj1a/LinkedListDeque$ListNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../proj1a/out/production/proj1a/LinkedListDeque.class" beforeDir="false" afterPath="$PROJECT_DIR$/../proj1a/out/production/proj1a/LinkedListDeque.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
