@@ -45,7 +45,7 @@ public class LinkedListDeque<T> {
     }
 
     /** Returns the number of items in the deque. */
-    public int size(){
+    public int size() {
         return size;
     }
 

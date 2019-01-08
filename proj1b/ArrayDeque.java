@@ -1,4 +1,4 @@
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T> {
     private T[] items;
     private int size;
     private int nextFirst;
@@ -49,7 +49,8 @@ public class ArrayDeque<T> implements Deque<T>{
             int secondLength = nextLast;
             System.arraycopy(items, 0, itemsNew, firstLength + 1, secondLength);
         } else if (flag.equals("decrease")) {
-            System.arraycopy(items, 0, itemsNew, 1, size);
+            int start = plusOne(nextFirst);
+            System.arraycopy(items, start, itemsNew, 1, size);
         }
         items = itemsNew;
         reversedLength = newLength;
