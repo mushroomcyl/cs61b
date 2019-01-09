@@ -28,11 +28,12 @@ public class TestPalindrome {
 
     @Test
     public void testNewIsPalindrome() {
-        assertTrue(palindrome.isPalindrome("a"));
-        assertTrue(palindrome.isPalindrome(null));
-        assertTrue(palindrome.isPalindrome("noon"));
-        assertTrue(palindrome.isPalindrome("aba"));
-        assertFalse(palindrome.isPalindrome("persiflage"));
-        assertFalse(palindrome.isPalindrome("Aba"));
+        CharacterComparator cc = new OffByOne();
+        assertTrue(palindrome.isPalindrome("a", cc));
+        assertTrue(palindrome.isPalindrome(null, cc));
+        assertFalse(palindrome.isPalindrome("noon", cc));
+        assertTrue(palindrome.isPalindrome("acb", cc));
+        assertFalse(palindrome.isPalindrome("persiflage", cc));
+        assertFalse(palindrome.isPalindrome("Aba", cc));
     }
 }

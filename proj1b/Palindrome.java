@@ -28,7 +28,7 @@ public class Palindrome {
         }
     }
 
-//    /** Overload isPalindrome. */
+    /** Overload isPalindrome. */
     public boolean isPalindrome(String word, CharacterComparator cc) {
         if (word == null) {
             return true;
