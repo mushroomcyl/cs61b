@@ -91,7 +91,7 @@ public class Board implements WorldState{
      *  and horizontal distance) from the tiles to their goal positions. */
     public int manhattan() {
         int count = 0;
-        for (int i = 0; i < board.size(); i++) {
+        for (int i = 0; i < N * N; i++) {
             int currNum = board.get(i);
             if (currNum == 0) {
                 continue;
