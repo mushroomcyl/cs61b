@@ -4,7 +4,20 @@
  * @author Akhil Batra, Alexander Hwang
  *
  */
+
+/**
+ * LSD radix sort is good for fixed-length string.
+ * MSD radix sort is good for variable-length strings.
+ *
+ * Here is a great tool for seeing how Radix sort works visually.
+ * https://www.cs.usfca.edu/~galles/visualization/RadixSort.html
+ *
+ */
+import java.util.Arrays;
+
 public class RadixSort {
+    private static int R = 256;
+
     /**
      * Does LSD radix sort on the passed in array with the following restrictions:
      * The array can only have ASCII Strings (sequence of 1 byte characters)
@@ -17,7 +30,22 @@ public class RadixSort {
      */
     public static String[] sort(String[] asciis) {
         // TODO: Implement LSD Sort
-        return null;
+        String[] sorted = new String[asciis.length];
+        System.arraycopy(asciis, 0 , sorted, 0, asciis.length);
+
+        //get the max length of string in asciis
+        int max = 0;
+        for (String asc : asciis) {
+            max = max > asc.length() ? max : asc.length();
+        }
+
+        //sort
+        int digit = 0;
+        while (digit < max) {
+            sorted = sortHelperLSD(sorted, digit);
+            digit += 1;
+        }
+        return sorted;
     }
 
     /**
@@ -26,9 +54,38 @@ public class RadixSort {
      * @param asciis Input array of Strings
      * @param index The position to sort the Strings on.
      */
-    private static void sortHelperLSD(String[] asciis, int index) {
+    private static String[] sortHelperLSD(String[] asciis, int index) {
         // Optional LSD helper method for required LSD radix sort
-        return;
+        // sort one digit of the asciis
+
+        int[] counts = new int[R];
+        String[] sorted = new String[asciis.length];
+
+        //count
+        for (String a : asciis) {
+            int pos = (int) a.charAt(a.length() - index - 1);
+            counts[pos] += 1;
+        }
+
+        //adjust counts' numbers as start indices
+        //use the same counts array to record start indices
+        int prev = 0;
+        for (int i = 0; i < R; i++) {
+            if (counts[i] > 0) {
+                counts[i] += prev;
+                prev = counts[i];
+            }
+        }
+
+        //reorder
+        for (int numString = asciis.length - 1; numString >= 0; numString--) {
+            // int number of character at particular position
+            int num = (int) asciis[numString].charAt(asciis[numString].length() - index - 1);
+            counts[num] -= 1;
+            int pos = counts[num];
+            sorted[pos] = asciis[numString];
+        }
+        return sorted;
     }
 
     /**
